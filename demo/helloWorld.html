@@ -1,14 +1,62 @@
 <!DOCTYPE html>
-<html  ng-app>
-<head>
-    <title>Simple app</title>
-    <script src="angular.js"></script>    
-    <script>
-    </script>
-</head>
-<body>
-	<!-- 展现了数据绑定-->
-    <input type="text" ng-model="person.name"  placeholder="Your name">
-    <h1>Hello  {{person.name}}</h1>
-</body>
+<html >
+  <head>
+<script  src="angular.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+  </head>
+  <body>
+   <!-- <div ng-app="test"  ng-controller="cont1">
+      <h1>Hello {{ clock.now| date:'yyyy-MM-dd HH:mm:ss Z'}}!</h1>
+    </div> -->
+    <div ng-app="myApp">
+      <div ng-controller="MyController">
+        <h1>展现整个person对象 {{person}}</h1>
+       <h1>Hello1111111 {{person.name|uppercase}}</h1>
+        <h4>angularjs中添加方法</h4>
+        <button ng-click="add(1)" class="button">加法</button><!--添加方法-->
+        <a ng-click="subtract(1)" class="button alert">减法</a><!--添加链接-->
+        <h4>Current count: {{ counter }}</h4>
+
+        <div ng-controller="ParentController">
+          <div ng-controller="ChildController">
+          <a ng-click="sayHello()">Say hello</a>
+          </div>
+          {{ user }}
+        </div>
+
+        <input ng-model="expr"
+            type="text"
+            placeholder="Enter an expression" />
+            <h2>{{parseValue}}</h2>
+
+
+           <div id="emailEditor">
+            <input ng-model="to"
+            type="email"
+            placeholder="Recipient" />
+            <textarea ng-model="emailBody"></textarea>
+            </div>
+            <div id="emailPreview">
+            <pre>__ previewText __</pre>
+            {{ 'ginger loves dog treats' | capitalize }}<br/>
+            {{ "San Francisco is very cloudy" | uppercase }}
+            {{ [{'name': 'c','status': 'awake'},{'name': 'Q','status': 'sleeping'},{'name': 'Nate','status': 'awake'}] | orderBy:'name' }}
+            {{ 123456789 | number }}
+            {{ "San Francisco is very cloudy" |limitTo:3}}
+            {{ 123.456789 | number:2 }}
+            {{ 123 | currency }}
+            {{ ['Ari','Lerner','Likes','To','Eat','Pizza'] | filter:'!e' }}
+            {{ {'name': 'Ari', 'City': 'SanFrancisco'} | json }}
+
+          </div>
+
+          <form name="form" novalidate>
+            <label name="email">Your email</label>
+            <input type="email"
+            name="email"
+            ng-model="email" placeholder="Email Address" required/>
+          </form>
+     </div>
+    </div>
+  </body>
 </html>
