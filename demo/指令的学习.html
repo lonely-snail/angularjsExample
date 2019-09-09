@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="myApp">
   <head>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/foundation/4.3.2/css/foundation.min.css">
     <script  src="angular.js"></script>
     <script type="text/javascript">
          var appModule = angular.module('myApp', []);
@@ -11,6 +12,19 @@
             template:'<a href="https://www.baidu.com/">Click me to go to Baidu</a>'
           };
         });
+
+
+       appModule .directive('myDirectivee', function() {
+        return {
+          restrict: 'AE',
+          replace: true,
+          scope: {
+            myUrl: '@',
+            myLinkText: '@'
+          },
+          template: '<a href="{{myUrl}}">{{myLinkText}}</a>'
+        };
+      });
     </script>
   </head>
   <body>
@@ -18,5 +32,11 @@
       <div  my-directive></div>
       <div  class="my-directive"></div>
       <h1 ng-init="greeting = 'Hello World5555555'">The greeting is: {{ greeting }}</h1>
+
+
+
+      <div my-directivee
+     my-url="https://www.baidu.com/"
+     my-link-text="Click me"></div> 
   </body>
 </html>
