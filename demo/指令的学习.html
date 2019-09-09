@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <script  src="angular.js"></script>
+    <script type="text/javascript">
+         var appModule = angular.module('myApp', []);
+        appModule.directive('myDirective',function(){
+          return {
+            restrict:'EAC',
+            replace: true,
+            template:'<a href="https://www.baidu.com/">Click me to go to Baidu</a>'
+          };
+        });
+    </script>
+  </head>
+  <body>
+       <my-directive></my-directive><!--调用指令   点击直接跳到百度  返回值加上replace: true, dom结构不会显示自定义my-directive标签-->
+      <div  my-directive></div>
+      <div  class="my-directive"></div>
+      <h1 ng-init="greeting = 'Hello World5555555'">The greeting is: {{ greeting }}</h1>
+  </body>
+</html>

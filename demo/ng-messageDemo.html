@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <script  src="angular.js"></script>
+    <script type="text/javascript">
+         var appModule = angular.module('myApp', ['ngMessages']);
+        appModule.controller("TestFormModule",function($scope){
+        $scope.user={
+            userName:'damoqiongqiu',
+            password:''
+    };
+    $scope.save=function(){
+        console.log($scope.user);
+        alert("保存数据!");
+    }});
+    </script>
+  </head>
+  <body>
+<form name="signup_form" novalidate ng-submit="signupForm()"
+ng-controller="signupController">
+<label>Your name</label>
+<input type="text" placeholder="Name" name="name" ng-model="signup.name" ng-minlength=
+3 ng-maxlength=20 required /> 
+<div class="error" ng-messages-include="templates/errors.html"   ng-messages="signup_form.name.$error">
+<!-- <div ng-message="required">Make sure you enter your name</div>
+<div ng-message="minlength">Your name must be at least 3 characters</div>
+<div ng-message="maxlength">Your name cannot be longer than 20 characters</div> -->
+</div>
+<button type="submit">Submit</button>
+</form>
+  </body>
+</html>
