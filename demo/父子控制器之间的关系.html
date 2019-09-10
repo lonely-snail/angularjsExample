@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+   <!--  <link rel="stylesheet" href="//cdn.jsdelivr.net/foundation/4.3.2/css/foundation.min.css"> -->
+    <script  src="angular.js"></script>
+    <script type="text/javascript">
+       
+    </script>
+    <style type="text/css">
+      .odd {
+           background-color: blue;
+       }
+        .even {
+          background-color: red;
+       }
+
+    </style>
+  </head>
+  <body>
+     <h1>Demo 1:ng-controller 继承关系之间的情况</h1>
+     <div ng-controller="SomeController">
+      {{ someBareValue }}
+     <button ng-click="someAction()">Communicate to child</button>
+      <div ng-controller="ChildController">
+      {{ someBareValue }}
+      <button ng-click="childAction()">Communicate to parent</button>
+      </div>
+    </div>
+
+    <div ng-controller="SomeController1">
+      {{ someModel1.someValue }}
+      <button ng-click="someAction1()">Communicate to child</button>
+        <div ng-controller="ChildController1">
+        {{ someModel1.someValue }}
+        <button ng-click="childAction1()">Communicate to parent</button>
+        </div>
+    </div>
+
+
+    <div ng-include="myTemplateName.html"
+        ng-controller="MyController"
+        ng-init="name = 'World'">
+        Hello {{ name }}
+    </div>
+
+
+      <div ng-controller="SomeController111" ng-switch on="person.name">
+        <input type="text" ng-model="person.name" />
+        <p ng-switch-default>And the winner is</p>
+        <h1 ng-switch-when="Erik">{{ person.name }}</h1>
+     </div>
+     <div ng-if="2 + 2 === 4">
+      Won't see this DOM node, not even in the source code
+     </div>
+
+    <div ng-if="2 + 2 === 4">
+      Hi, I do exist
+    </div>
+
+    <ul ng-controller="PeopleController">
+      <li ng-repeat="person in people" ng-class="{even: !$even, odd: !$odd}">
+      {{person.name}} lives in {{person.city}}  {{$even}}  {{$index}} 
+      </li>
+    </ul>
+
+
+    <div ng-init="greeting='Hello';person='World'">
+      {{greeting}} {{person}}
+      <p ng-bind="greeting"></p>
+      </div>
+
+
+      <div ng-show="2 + 2 == 5">
+      2 + 2 isn't 5, don't show
+      </div>
+      <div ng-show="2 + 2 == 4">
+      2 + 2 is 4, do show
+      </div>
+      <div ng-hide="2 + 2 == 5">
+      2 + 2 isn't 5, don't hide
+      </div>
+      <div ng-hide="2 + 2 == 4">
+      2 + 2 is 4, do hide
+      </div>
+
+
+      <div ng-controller="EquationController">
+        <input type="text"   ng-model="equation.x"   ng-change="change()" /><!--值改变 就调用函数-->
+        <code>{{ equation.output }}</code>
+      </div>
+  <script>
+    var appModule = angular.module('myApp', []);
+     appModule
+        .controller('SomeController', function($scope) {
+        // 反模式，裸值
+        $scope.someBareValue = 'hello computer';
+        // 设置 $scope 本身的操作，这样没问题
+        $scope.someAction = function() {
+        // 在SomeController和ChildController中设置{{ someBareValue }}
+        $scope.someBareValue = 'hello human, from parent';
+        };
+        })
+        .controller('ChildController', function($scope) {
+        $scope.childAction = function() {
+        // 在ChildController中设置{{ someBareValue }}
+        $scope.someBareValue = 'hello human, from child';
+        };
+        });
+
+       appModule.controller('SomeController1', function($scope) {
+        // 最佳实践，永远使用一个模式
+        $scope.someModel1 = {
+        someValue: 'hello computer'
+        }
+        $scope.someAction1 = function() {
+        $scope.someModel1.someValue = 'hello human, from parent';
+        };
+        });
+        appModule.controller('ChildController1', function($scope) {
+        $scope.childAction1 = function() {
+        $scope.someModel1.someValue = 'hello human, from child';
+        };
+        });
+        appModule.controller('MyController', function($scope) {
+        $scope.childAction1 = function() {
+        $scope.someModel1.someValue = 'hello human, from child';
+        };
+        });
+
+        appModule.controller('SomeController111', function($scope) {
+         $scope.person = {};
+          });
+        appModule.controller('PeopleController',function($scope) {
+            $scope.people = [
+            {name: "Ari", city: "San Francisco"},
+            {name: "Erik", city: "Seattle"},
+            {name: "fei", city: "china"},
+             {name: "xu", city: "shanxi"},
+            ];
+         });
+        appModule
+        .controller('EquationController',function($scope) {
+        $scope.equation = {};
+        $scope.change = function() {
+        $scope.equation.output
+        = parseInt($scope.equation.x) + 2;
+        };
+        });
+  </script>
+  </body>
+</html>
