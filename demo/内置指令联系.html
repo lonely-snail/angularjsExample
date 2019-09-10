@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <script  src="angular.js"></script>
+    <script type="text/javascript">
+       var appModule = angular.module('myApp', []);
+       appModule.run(function($rootScope, $timeout) {
+        debugger
+console.log("运行了+1111111");
+            $rootScope.isDisabled = true;
+            $timeout(function() {
+              debugger
+              console.log("运行了+222222");
+            $rootScope.isDisabled = false;
+            }, 5000);
+        });
+          appModule.controller("TestFormModule",function($scope){
+            //$scope.someProperty=true;
+          });
+    </script>
+  </head>
+  <body>
+    <h1>Demo 1:ng-disabled 练习   按钮禁止</h1>
+  <input type="text" ng-model="someProperty" placeholder="Type to Enable"><!--未出现  所以someProperty是false-->
+  <button ng-model="button" ng-disabled="!someProperty">A Button</button>
+
+  <h1>Demo 2:输入框不可输入</h1>
+  <textarea ng-disabled="isDisabled">Wait 5 second</textarea>
+  <br/>
+  Type here to make sibling readonly:
+  <input type="text" ng-model="someProperty"><br/>
+  <input type="text"   ng-readonly="someProperty"   value="Some text here"/><!--禁止输入  修改-->
+
+   <!--ng-checked 练习-->
+   <br>
+   <h1>Demo 3:ng-checked 练习</h1>
+   <label>someProperty = {{someProperty}}</label>
+   <input type="checkbox"   ng-checked="someProperty"   ng-init="someProperty = true"   ng-model="someProperty">
+   <label>someProperty = {{anotherProperty}}</label>
+   <input type="checkbox"  ng-checked="anotherProperty"  ng-init="anotherProperty = false"  ng-model="anotherProperty">
+
+   <br>
+   <!--ng-selected 练习-->
+   <h1>Demo 4:ng-selected 练习</h1>
+   <label>Select Two Fish:</label>
+   <input type="checkbox"   ng-model="isTwoFish"><br/>
+    <select>
+      <option>One Fish</option>
+      <option ng-selected="isTwoFish">Two Fish</option>
+    </select>
+
+
+  <br>
+  <!-- Always use ng-href when href includes an {{ expression }} -->
+  <h1>Demo 4:ng-href 练习</h1>
+  <a ng-href="{{myHref}}">I'm feeling lucky, when I load</a>
+
+  <!-- href may not load before user clicks -->
+  <a href="{{myHref}}">I'm feeling 404</a>
+
+
+  <h1>Wrong Way</h1>
+  <!--<img src="{{imgSrc}}" />使用这个src会报错-->
+
+  <h1>Right way</h1>
+  <img ng-src="{{imgSrc}}" />
+  <br>
+  <h1>Demo 5:ng-app 练习</h1>
+  <div>
+    {{ someProperty11 }}
+    <button ng-click="someAction()">Communicate</button>
+  </div>
+
+
+  <br>
+  <h1>Demo 6:ng-controller 练习</h1>
+  <div ng-controller="SomeCtrl">
+    {{ someModel.someProperty }}
+    <button ng-click="someAction()">Communicate</button>
+  </div>
+
+  <script>
+    // 延时两秒出现  a标签的作用
+    angular.module('myApp', [])
+    .run(function($rootScope, $timeout) {
+      $timeout(function() {
+        $rootScope.myHref = 'https://www.baidu.com/';
+      }, 2000);
+
+    });
+    angular.module('myApp', [])
+    .run(function($rootScope, $timeout) {
+
+      $timeout(function() {
+        $rootScope.imgSrc = 'https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=4094533855,2791674877&fm=58&bpow=500&bpoh=500';
+      }, 2000);
+    });
+   angular.module('myApp', [])
+    .run(function($rootScope) {
+      $rootScope.someProperty11 = 'hello computer';
+      $rootScope.someAction = function() {
+      $rootScope.someProperty11 = 'hello human';
+    };
+    });
+     angular.module('myApp', [])
+    .controller('SomeCtrl', function($scope) {
+      // 创建模型
+      $scope.someModel = {
+        // 添加属性
+        someProperty: 'hello computer'
+      }
+      // 设置$scope自身的操作
+      $scope.someAction = function() {
+        $scope.someModel.someProperty = 'hello human';
+      };
+    });
+  </script>
+  </body>
+</html>
